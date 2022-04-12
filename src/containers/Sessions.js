@@ -2,6 +2,8 @@ import React from 'react';
 import {Text, View, SectionList, Image} from 'react-native';
 import {sessions} from '../data/sessions.json';
 import styles from '../containers/styles/sharedStyles';
+import { useState } from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 function Sessions() {
 
@@ -40,17 +42,31 @@ const FooterCompo = () => {
   const sessionItem = ({item,index}) => {
     return(
       <View>
-        <SessionList id={index} name={item.title} desc={item.description} speaker={item.speakers[0].name} />
+        <SessionList id={index} name={item.title} desc={item.description} speaker={item.speakers[0].name}
+        level={item.level} room={item.room}  />
       </View>
     );
   }
 
   const SessionList = (props) => {
+    const [moreInfo, setMoreInfo] = useState(false);
     return(
       <View style={styles.sectionContainer}>
         <Text style={styles.headerContainer}>Session Name : {props.name}</Text>
-        <Text style={styles.headerContainer}>Session Details : {props.desc}</Text>
         <Text style={styles.headerContainer}>Session Speaker : {props.speaker}</Text>
+        <TouchableOpacity onPress={() => setMoreInfo(!moreInfo)}>
+          <Text style={styles.clickableText}>
+            {moreInfo ? 'Hide Details' : 'Show More Details'}
+          </Text>
+        </TouchableOpacity>
+        {moreInfo ? (
+          <View>
+          <Text style={styles.headerContainer}>Session Details : {props.desc}</Text>
+          <Text style={styles.headerContainer}>Session Level : {props.level}</Text>
+          <Text style={styles.headerContainer}>Session Room : {props.room}</Text>
+          </View>
+        ): <View></View>}
+        
       </View>
     );
   }

@@ -3,6 +3,7 @@ import React from 'react';
 import {Text, View, FlatList, SafeAreaView, Image} from 'react-native';
 import {speakers} from '../data/speakers.json';
 import styles from '../containers/styles/sharedStyles';
+import Header  from '../components/Header';
 
 function Speakers() {
 
@@ -29,11 +30,9 @@ function Speakers() {
 
     const HeaderCompo = () => {
         return (
-        <View style={styles.sectionContainer}>
-            <Image style= {styles.headerCompo}
-            source={require('../images/girl.png')}/>
-            <Text style={styles.sectionDescription}>Speakers Lineup!!</Text>
-        </View>);
+            <Header text= 'Speakers Lineup!!'
+            source={require('../images/girl.png')}/>);
+
     };
 
     const FooterCompo = () => {

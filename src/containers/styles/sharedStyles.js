@@ -99,6 +99,13 @@ export default StyleSheet.create({
     backgroundColor: 'lightsalmon',
     borderRadius: 6,
   },
+  clickableText: {
+    paddingHorizontal: 25,
+    marginBottom: 10,
+    color: 'green',
+    borderRadius: 6,
+    alignSelf: 'center',
+  },
   headerTitle: {
     fontSize: 24,
     fontWeight: '600',
