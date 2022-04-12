@@ -1,5 +1,16 @@
 import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
+  separatorStyle: {
+    height: 2,
+    backgroundColor: 'red',
+    paddingTop: 2,
+    marginTop: 25,
+  },
+  headerCompo: {
+    width: '100%',
+    height: 250,
+    resizeMode: 'cover',
+  },
   imagehome: {
     width: 180,
     height: 100,
