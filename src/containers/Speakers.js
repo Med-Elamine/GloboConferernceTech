@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
-import {Text, View, FlatList, SafeAreaView, Image, TextInput} from 'react-native';
+import {Text, View, FlatList, SafeAreaView, Image, TextInput, Pressable} from 'react-native';
 import {speakers} from '../data/speakers.json';
 import styles from '../containers/styles/sharedStyles';
 import Header  from '../components/Header';
+import { createRef } from 'react/cjs/react.production.min';
 
 function Speakers() {
 
@@ -46,31 +47,11 @@ function Speakers() {
     };
 
 
-
-    const SearchSessions = (props) => {
-        const [searchText, setSearchText] = useState('');
-
-        const handleSearch = (text) => {
-            setSearchText(text);
-            props.getSearchText(text);
-        };
-
-        return(
-            <View style={styles.container}>
-                <TextInput 
-                    style={styles.searchInput}
-                    value={searchText}
-                    onChangeText={(text) => handleSearch(text)}
-                />
-            </View>
-        );
-    };
-
     const [filteredSpeakers, setFilteredSpeakers] = useState(speakers);
 
     const getSearchText = (text) => {
-        let filteredSpeakersList = filteredSpeakers.filter((value) => 
-        value.sessions[0].name.toLowerCase().includes(text.toLowerCase()));
+        let filteredSpeakersList = speakers.filter((value) => 
+        value.sessions[0].name.toLowerCase().includes(text.toLowerCase()),);
         setFilteredSpeakers(filteredSpeakersList);
     }
 
@@ -78,7 +59,8 @@ function Speakers() {
       <SafeAreaView>
         <SearchSessions getSearchText={getSearchText}/>
         <FlatList
-        data={speakers}
+        keyboardDismissMode='on-drag'
+        data={filteredSpeakers}
         keyExtractor={(item) => item.id}
         renderItem={speakerItem}
         ItemSeparatorComponent={SeparatorCompo}
@@ -88,5 +70,41 @@ function Speakers() {
       </SafeAreaView>
   );
 }
+
+const SearchSessions = (props) => {
+    const [searchText, setSearchText] = useState('');
+
+    const handleSearch = (text) => {
+        setSearchText(text);
+        props.getSearchText(text);
+    };
+
+    const clearSearch = () => {
+        setSearchText('');
+        props.getSearchText('');
+    };
+
+
+    return(
+        <View style={styles.container}>
+            <TextInput 
+                style={styles.searchInput}
+                value={searchText}
+                onChangeText={(text) => handleSearch(text)}
+                placeholder= "Search Sessions"
+                returnKeyType={'go'}
+                autoFocus={false}
+                autoCorrect={false}
+                multiline={false}
+                selectionColor={'red'}
+            />
+        <Pressable style={styles.clearContainer}
+        onPress={clearSearch}>
+            <Image style={styles.clearImage} source={require('../images/multiply-1_Orange.png')} />
+        </Pressable>
+        </View>
+    );
+};
+
 
 export default Speakers;
